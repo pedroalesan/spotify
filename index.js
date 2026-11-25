@@ -1,17 +1,19 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongose = require('mongoose');
+const path = require('path');
 
 const app = express();
 
-//Midllewares
+// Middlewares
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'src')));
 
-// Conexion a mongo
+// Conexión a MongoDB
 mongose.connect("mongodb+srv://root:root@cluster0.vcrqhkl.mongodb.net/spotify")
     .then(() => console.log("Conexión exitosa a MongoDB"))
-    .catch(err => console.log("Error al conectar a MongoDB", err))
+    .catch(err => console.log("Error al conectar a MongoDB", err));
 
 const artistaSchema = new mongose.Schema({
     nombre: String,
@@ -26,7 +28,7 @@ const Artista = mongose.model('Artista', artistaSchema, 'artistas');
 
 const cancionSchema = new mongose.Schema({
     titulo: String,
-    artista_id: { type: mongose.Schema.Types.ObjectId, ref: 'Artista'},
+    artista_id: { type: mongose.Schema.Types.ObjectId, ref: 'Artista' },
     album: String,
     duracion: Number,
     reproducciones: Number,
@@ -35,23 +37,22 @@ const cancionSchema = new mongose.Schema({
 });
 const Cancion = mongose.model('Cancion', cancionSchema, 'canciones');
 
-//1. 
-app.get('/api/artistas', async (req,res)=>{
+// ===== RUTAS API =====
+
+// Obtener todos
+app.get('/api/artistas', async (req, res) => {
     try {
         const artistas = await Artista.find();
         res.status(200).json(artistas);
-    } catch (e) { res.status(500).json({msg: "Error al obtener Artistas", error: e});}
+    } catch (e) { res.status(500).json({ msg: "Error al obtener Artistas", error: e }); }
 });
 
-app.get('/api/canciones', async (req,res)=>{
+app.get('/api/canciones', async (req, res) => {
     try {
-        const canciones = await Cancion.find();
+        const canciones = await Cancion.find().populate('artista_id');
         res.status(200).json(canciones);
-    } catch (e) {res.status(500).json({msg:"Error al obtener Canciones",error:e});}
+    } catch (e) { res.status(500).json({ msg: "Error al obtener Canciones", error: e }); }
 });
-
-//2.
-// ===== ARTISTAS =====
 
 // Insertar artista
 app.post('/api/artistas', async (req, res) => {
@@ -107,8 +108,6 @@ app.delete('/api/artistas/:id', async (req, res) => {
     }
 });
 
-// ===== CANCIONES =====
-
 // Insertar canción
 app.post('/api/canciones', async (req, res) => {
     try {
@@ -163,12 +162,20 @@ app.delete('/api/canciones/:id', async (req, res) => {
     }
 });
 
-app.listen(3000, () => {
-    console.log("Servidor escuchando en http://localhost:3000")
+app.get('/api/estado', (req, res) => {
+    res.json({ mensaje: 'Servidor Express funcionando correctamente' });
 });
 
-app.get("/", (req,res)=>{
-        res.status(200).json({
-            mensaje: "Servidor Express funcionando correctamente"
-        });
+// Servir el frontend principal en la ruta raíz
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'src', 'index.html'));
 });
+
+// Solo levantar puerto en desarrollo local
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(3000, () => {
+        console.log("Servidor escuchando en http://localhost:3000");
+    });
+}
+
+module.exports = app;
