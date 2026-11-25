@@ -1,15 +1,16 @@
 {
   "version": 2,
   "builds": [
-    { "src": "index.js", "use": "@vercel/node" },
-    { "src": "src/**", "use": "@vercel/static" }
+    {
+      "src": "index.js",
+      "use": "@vercel/node"
+    }
   ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "index.js" },
-    { "src": "/css/(.*)", "dest": "/src/css/$1" },
-    { "src": "/javascript/(.*)", "dest": "/src/javascript/$1" },
-    { "src": "/contenido/(.*)", "dest": "/src/contenido/$1" },
-    { "src": "/img/(.*)", "dest": "/src/img/$1" },
-    { "src": "/(.*)", "dest": "index.js" }
+  "rewrites": [
+    { "source": "/css/(.*)", "destination": "/src/css/$1" },
+    { "source": "/javascript/(.*)", "destination": "/src/javascript/$1" },
+    { "source": "/contenido/(.*)", "destination": "/src/contenido/$1" },
+    { "source": "/img/(.*)", "destination": "/src/img/$1" },
+    { "source": "/(.*)", "destination": "/index.js" }
   ]
 }
