@@ -1,0 +1,72 @@
+<section class="fade-in">
+  <div class="section-header">
+    <h1>Catálogo de Canciones</h1>
+  </div>
+
+  <div class="split-layout">
+    <!-- Formulario listo para conectar a POST /api/canciones -->
+    <form class="spotify-form" id="form-cancion">
+      <h3>Agregar Canción</h3>
+      <div class="form-group">
+        <label>Título</label>
+        <input type="text" name="titulo" placeholder="Ej. De Música Ligera" required>
+      </div>
+      <div class="form-group">
+        <label>Artista</label>
+        <input type="text" name="artista" placeholder="Ej. Soda Stereo" required>
+      </div>
+      <div class="form-group">
+        <label>Álbum</label>
+        <input type="text" name="album" placeholder="Ej. Canción Animal">
+      </div>
+      <div class="form-group">
+        <label>Duración</label>
+        <input type="text" name="duracion" placeholder="Ej. 3:32" required>
+      </div>
+      <button type="submit" class="btn-primary">Registrar Pista</button>
+    </form>
+
+    <div>
+      <table class="tracks-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Canción</th>
+            <th>Álbum</th>
+            <th>Duración</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-canciones-body">
+          <tr class="track-row" data-song="De Música Ligera" data-artist="Soda Stereo" data-duration="3:32" data-grad="gradient-2">
+            <td>1</td>
+            <td>
+              <div class="track-cell">
+                <div class="mini-cover gradient-2">🎸</div>
+                <div>
+                  <strong>De Música Ligera</strong>
+                  <span>Soda Stereo</span>
+                </div>
+              </div>
+            </td>
+            <td>Canción Animal</td>
+            <td>3:32</td>
+          </tr>
+          <tr class="track-row" data-song="Get Lucky" data-artist="Daft Punk" data-duration="4:08" data-grad="gradient-3">
+            <td>2</td>
+            <td>
+              <div class="track-cell">
+                <div class="mini-cover gradient-3">✨</div>
+                <div>
+                  <strong>Get Lucky</strong>
+                  <span>Daft Punk</span>
+                </div>
+              </div>
+            </td>
+            <td>Random Access Memories</td>
+            <td>4:08</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

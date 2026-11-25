@@ -1,0 +1,44 @@
+<section class="fade-in">
+  <div class="section-header">
+    <h1>Gestión de Artistas</h1>
+  </div>
+
+  <div class="split-layout">
+    <!-- Formulario listo para conectar a POST /api/artistas -->
+    <form class="spotify-form" id="form-artista">
+      <h3>Nuevo Artista</h3>
+      <div class="form-group">
+        <label>Nombre del Artista</label>
+        <input type="text" name="nombre" placeholder="Ej. Soda Stereo" required>
+      </div>
+      <div class="form-group">
+        <label>Género Musical</label>
+        <input type="text" name="genero" placeholder="Ej. Rock Alternativo" required>
+      </div>
+      <div class="form-group">
+        <label>País de Origen</label>
+        <input type="text" name="pais" placeholder="Ej. Argentina">
+      </div>
+      <button type="submit" class="btn-primary">Guardar Artista</button>
+    </form>
+
+    <!-- Listado visual -->
+    <div class="cards-grid" id="contenedor-artistas">
+      <div class="artist-card">
+        <div class="artist-avatar gradient-1">TW</div>
+        <h3>The Weeknd</h3>
+        <p>R&B • Canadá</p>
+      </div>
+      <div class="artist-card">
+        <div class="artist-avatar gradient-2">AM</div>
+        <h3>Arctic Monkeys</h3>
+        <p>Rock • Reino Unido</p>
+      </div>
+      <div class="artist-card">
+        <div class="artist-avatar gradient-3">DP</div>
+        <h3>Daft Punk</h3>
+        <p>Electrónica • Francia</p>
+      </div>
+    </div>
+  </div>
+</section>
